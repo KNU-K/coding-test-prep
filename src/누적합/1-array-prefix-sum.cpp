@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include "../../test/test.hpp"
 #include <vector>
 #define M 10 + 1
 #define getPrevValue(idx) (idx <= 0 ?0 : mat[idx]);
@@ -23,28 +24,13 @@ void initPrefixArray(){
 int calcPrefixSum(int a,int b){
     return mat[b] - getPrevValue(a-1);
 }
-void changeConsoleColor(int colorCode) {
-    std::cout << "\033[" << colorCode << "m";
-}
 void test(){
+    TestSuite ts;
+    ts.describe("prefix sum test")
+        .expect(calcPrefixSum(1,10),55)
+        .expect(calcPrefixSum(3,5),12);
 
-    if (calcPrefixSum(1, 10) == 55) {
-        changeConsoleColor(32);
-        cout << "Test 1 Passed" << std::endl;
-    } else {
-        changeConsoleColor(31);
-        cout << "Test 1 Failed" << std::endl;
-    }
-
-    if (calcPrefixSum(1, 3) == 6) {
-        changeConsoleColor(32);
-        cout << "Test 2 Passed" << std::endl;
-    } else {
-        changeConsoleColor(31);
-        cout << "Test 2 Failed" << std::endl;
-    }
-
-    changeConsoleColor(0); 
+    ts.getResults();
 }
 int main(){
     initPrefixArray();
